@@ -1,6 +1,7 @@
 # 🎮 FP Escape Room Generator
 
 Convierte cualquier tema de tus apuntes en un **escape room gamificado con calificación automática en Moodle** — en menos de 10 minutos, sin código.
+
 ![github-small](https://github.com/albertosanchezedu/fp-scaperoom-generator/blob/dbaeaaf959e22936125090ead35956744b0b2c59/images/Captura%20de%20pantalla%202026-03-15%20a%20las%2020.27.30%402x.png)
 
 ## ¿Qué consigues?
