@@ -4,6 +4,10 @@ Convierte cualquier tema de tus apuntes en un **escape room gamificado con calif
 
 ![github-small](https://github.com/albertosanchezedu/fp-scaperoom-generator/blob/dbaeaaf959e22936125090ead35956744b0b2c59/images/Captura%20de%20pantalla%202026-03-15%20a%20las%2020.27.30%402x.png)
 
+## 🚀 Úsalo ahora
+
+**[→ Abrir generador](https://albertosanchezedu.github.io/fp-scaperoom-generator/escape_room_generator_v9.html)**
+
 ## ¿Qué consigues?
 
 Una actividad lista para tu aula virtual donde los alumnos juegan en equipo resolviendo puzzles, descifran códigos y acaban compitiendo individualmente en un cuestionario que se autocorrige y envía la nota al calificador.
