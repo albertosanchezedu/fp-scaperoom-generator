@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Share+Tech+Mono&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Fira Sans',sans-serif;background:#87CEEB;min-height:100vh;}
+.topbar{background:#fff;border-bottom:3px solid #CCFF00;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+.logo-badge{background:#CCFF00;color:#111;font-weight:900;font-size:16px;padding:4px 10px;border-radius:4px;}
+.logo-name{font-size:11px;font-weight:600;color:#666;letter-spacing:0.5px;text-transform:uppercase;margin-left:8px;}
+.author-link{font-size:11px;color:#2288bb;text-decoration:none;font-weight:600;}
+.license{font-size:10px;font-family:'Share Tech Mono',monospace;color:#888;letter-spacing:1px;}
+.main{max-width:800px;margin:0 auto;padding:20px 16px 60px;}
+.scr{display:none;}
+.scr.on{display:block;animation:fi 0.3s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.hero{text-align:center;padding:36px 16px 24px;}
+.hero-badge{display:inline-block;background:#F06B6B;color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:18px;}
+.hero-h{font-size:clamp(28px,6vw,52px);font-weight:900;line-height:0.95;letter-spacing:-2px;color:#111;margin-bottom:14px;}
+.hero-h span{color:#F06B6B;}
+.hero-p{font-size:15px;color:#333;max-width:540px;margin:0 auto 24px;line-height:1.6;}
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;}
+@media(max-width:560px){.feats{grid-template-columns:1fr;}}
+.feat{background:#fff;border-radius:10px;padding:16px;border:1px solid #c0dff0;}
+.feat-i{font-size:24px;margin-bottom:6px;display:block;}
+.feat-t{font-size:13px;font-weight:700;color:#111;margin-bottom:3px;}
+.feat-d{font-size:11px;color:#666;line-height:1.5;}
+.plats{background:#fff;border-radius:10px;padding:14px 18px;border:1px solid #c0dff0;margin-bottom:24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.plat-lbl{font-size:10px;font-family:'Share Tech Mono',monospace;letter-spacing:2px;color:#888;text-transform:uppercase;flex-shrink:0;}
+.plat-tag{background:#e8f5fd;border:1px solid #7ab8d8;border-radius:4px;padding:4px 10px;font-size:11px;font-weight:600;color:#2288bb;}
+.flow{display:flex;margin-bottom:28px;border-radius:10px;overflow:hidden;border:1px solid #c0dff0;}
+.flow-step{flex:1;background:#fff;padding:14px 10px;text-align:center;}
+.flow-step+.flow-step{border-left:1px solid #c0dff0;}
+.flow-num{background:#CCFF00;color:#111;font-weight:900;font-size:10px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-family:'Share Tech Mono',monospace;}
+.flow-t{font-size:12px;font-weight:700;color:#111;margin-bottom:2px;}
+.flow-d{font-size:10px;color:#888;line-height:1.4;}
+.card{background:#fff;border-radius:12px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,0.07);border:1px solid #c0dff0;margin-bottom:16px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+.card.lime::before{background:#CCFF00;}
+.card.coral::before{background:#F06B6B;}
+.card.blue::before{background:#2288bb;}
+.card-lbl{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#888;margin-bottom:7px;}
+.card-h{font-size:19px;font-weight:900;color:#111;margin-bottom:5px;letter-spacing:-0.5px;}
+.card-sub{font-size:13px;color:#888;margin-bottom:16px;line-height:1.5;}
+
+/* KEY FIX: altura fija + scroll interno, sin resize, sin autoexpand */
+textarea#inp-con{
+  width:100%;
+  border:2px solid #c0dff0;
+  border-radius:8px;
+  padding:12px;
+  font-family:'Fira Sans',sans-serif;
+  font-size:13px;
+  color:#111;
+  resize:none;
+  outline:none;
+  transition:border-color 0.2s;
+  line-height:1.6;
+  height:220px;
+  overflow-y:scroll;
+  display:block;
+}
+textarea#inp-con:focus{border-color:#CCFF00;}
+textarea#inp-con::placeholder{color:#bbb;}
+
+.char-count{font-family:'Share Tech Mono',monospace;font-size:10px;color:#888;margin-top:4px;text-align:right;}
+.char-count.ok{color:#5a8a00;}
+input[type=text]{width:100%;border:2px solid #c0dff0;border-radius:8px;padding:9px 12px;font-family:'Fira Sans',sans-serif;font-size:13px;color:#111;outline:none;transition:border-color 0.2s;background:#fff;}
+input[type=text]:focus{border-color:#CCFF00;}
+.flbl{font-size:13px;font-weight:700;color:#111;margin-bottom:4px;display:block;}
+.fsub{font-size:11px;color:#888;margin-bottom:6px;}
+.frow{margin-bottom:14px;}
+.sala-picker{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;}
+.so{padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid #7ab8d8;background:#fff;color:#333;transition:all 0.15s;font-family:'Fira Sans',sans-serif;user-select:none;display:inline-block;}
+.so:hover{border-color:#CCFF00;background:#f8fff0;}
+.so.sel{background:#CCFF00;border-color:#5a8a00;color:#111;}
+.btn{padding:11px 22px;border:none;cursor:pointer;font-family:'Fira Sans',sans-serif;font-size:14px;font-weight:700;border-radius:8px;transition:all 0.2s;display:inline-flex;align-items:center;gap:7px;line-height:1;}
+.btn-lime{background:#CCFF00;color:#111;}
+.btn-lime:hover{background:#d4ff20;transform:translateY(-1px);}
+.btn-ink{background:#111;color:#CCFF00;}
+.btn-ink:hover{background:#333;transform:translateY(-1px);}
+.btn-ghost{background:#fff;border:2px solid #7ab8d8;color:#333;}
+.btn-ghost:hover{border-color:#CCFF00;color:#111;}
+.btn-coral{background:#F06B6B;color:#fff;}
+.btn-coral:hover{background:#e85555;transform:translateY(-1px);}
+.prompt-area{background:#f0f8ff;border:2px solid #7ab8d8;border-radius:8px;padding:14px;font-family:'Share Tech Mono',monospace;font-size:11px;color:#333;white-space:pre-wrap;word-break:break-all;max-height:320px;overflow-y:auto;line-height:1.6;margin-bottom:12px;}
+.copy-row{display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;}
+.copied{background:#CCFF00;color:#2a5000;font-size:10px;font-weight:700;padding:3px 9px;border-radius:3px;display:none;font-family:'Share Tech Mono',monospace;}
+.copied.on{display:inline-block;}
+.hl{border-radius:8px;padding:13px 15px;margin-bottom:12px;font-size:13px;line-height:1.65;}
+.hl-lime{background:rgba(204,255,0,0.18);border:2px solid #5a8a00;color:#2a5000;}
+.hl-coral{background:rgba(240,107,107,0.08);border:2px solid #F06B6B;color:#8a0000;}
+.hl-blue{background:#e8f5fd;border:2px solid #7ab8d8;color:#1a4a7a;}
+.g-step{display:flex;gap:9px;align-items:flex-start;margin-bottom:10px;}
+.g-num{background:#CCFF00;color:#111;font-weight:900;font-size:10px;width:22px;height:22px;min-width:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Share Tech Mono',monospace;}
+.g-text{font-size:13px;color:#333;line-height:1.6;}
+.g-text code{background:#e8f5fd;padding:2px 6px;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:11px;color:#1a4a7a;}
+.g-text .note{font-size:11px;color:#888;display:block;margin-top:2px;font-style:italic;}
+.g-sec{margin-bottom:20px;}
+.g-title{font-size:14px;font-weight:700;color:#111;margin-bottom:10px;}
+.g-div{height:1px;background:#c0dff0;margin:16px 0;}
+.tabs{display:flex;border-bottom:2px solid #c0dff0;}
+.tab{padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;color:#888;transition:all 0.15s;}
+.tab.on{color:#111;border-bottom-color:#CCFF00;}
+.tc{display:none;padding-top:14px;}
+.tc.on{display:block;}
+.footer{background:#fff;border-top:2px solid #CCFF00;padding:14px 20px;text-align:center;margin-top:16px;}
+.fc{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
+.fb{background:#CCFF00;color:#111;font-weight:900;font-size:13px;padding:3px 9px;border-radius:3px;}
+.fn{font-size:12px;font-weight:700;color:#111;}
+.fro{font-size:10px;color:#888;}
+.fs{color:#c0dff0;font-size:16px;}
+.fl{color:#2288bb;text-decoration:none;font-size:11px;font-weight:600;}
+.flic{font-size:9px;font-family:'Share Tech Mono',monospace;color:#888;letter-spacing:1px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:8px;">
+    <div class="logo-badge">FP:</div>
+    <span class="logo-name">Escape Room Generator</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a class="author-link" href="https://www.linkedin.com/in/albertosanchezcabanillas/" target="_blank">Alberto Sánchez Cabanillas ↗</a>
+    <span class="license">CC BY-NC 4.0</span>
+  </div>
+</div>
+
+<!-- LANDING -->
+<div class="scr on" id="s-landing">
+<div class="main">
+  <div class="hero">
+    <div class="hero-badge">Herramienta gratuita para docentes</div>
+    <h1 class="hero-h">Crea escape rooms<br><span>gamificados</span><br>para tu aula.</h1>
+    <p class="hero-p">Pega el contenido de tu tema y obtén un <strong>escape room interactivo</strong> con puzzles, códigos cifrados y calificación automática en Moodle. <strong>Sin código. Sin diseño. Solo contenido.</strong></p>
+  </div>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">1</div><div class="flow-t">Rellena aquí</div><div class="flow-d">Módulo, tema y nº de salas</div></div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="flow-t">Copia el prompt</div><div class="flow-d">Lo pegas en Claude</div></div>
+    <div class="flow-step"><div class="flow-num">3</div><div class="flow-t">Claude genera</div><div class="flow-d">Revisas y descargas HTML + AIKEN</div></div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="flow-t">Súbelo a Moodle</div><div class="flow-d">Guía paso a paso aquí</div></div>
+  </div>
+  <div class="feats">
+    <div class="feat"><span class="feat-i">🎮</span><div class="feat-t">100% gamificado</div><div class="feat-d">Vidas, temporizador, sala de castigo y códigos cifrados.</div></div>
+    <div class="feat"><span class="feat-i">📊</span><div class="feat-t">Evalúa en Moodle</div><div class="feat-d">Cuestionario AIKEN listo para importar. Notas al calificador.</div></div>
+    <div class="feat"><span class="feat-i">⚡</span><div class="feat-t">Listo en minutos</div><div class="feat-d">Claude genera todo. Tú revisas y descargas.</div></div>
+  </div>
+  <div class="plats">
+    <span class="plat-lbl">Compatible con</span>
+    <span class="plat-tag">Moodle</span>
+    <span class="plat-tag">EducaMadrid</span>
+    <span class="plat-tag">EVEX Extremadura</span>
+    <span class="plat-tag">Cualquier LMS Moodle</span>
+  </div>
+  <div style="text-align:center;margin-bottom:16px;">
+    <button class="btn btn-coral" style="font-size:15px;padding:14px 32px;" onclick="goSt('creator')">
+      <span>Crear mi escape room</span><span style="font-size:18px;">→</span>
+    </button>
+    <div style="margin-top:8px;font-size:11px;color:#888;">Necesitas cuenta gratuita en claude.ai</div>
+  </div>
+  <div style="text-align:center;">
+    <button class="btn btn-ghost" style="font-size:13px;" onclick="goSt('moodle')">📚 ¿Cómo subirlo a Moodle?</button>
+  </div>
+</div>
+<div class="footer"><div class="fc">
+  <div class="fb">FP:</div><div><div class="fn">Alberto Sánchez Cabanillas</div><div class="fro">Docente · Comercio y Marketing</div></div>
+  <div class="fs">|</div><a class="fl" href="https://www.linkedin.com/in/albertosanchezcabanillas/" target="_blank">LinkedIn ↗</a>
+  <div class="fs">|</div><div class="flic">CC BY-NC 4.0</div>
+</div></div>
+</div>
+
+<!-- FORMULARIO -->
+<div class="scr" id="s-creator">
+<div class="main">
+  <div class="card lime">
+    <div class="card-lbl">Paso 1 · Rellena los datos</div>
+    <div class="card-h">Cuéntame sobre tu tema</div>
+    <div class="card-sub">Cuanto más contenido pegues, mejores serán los puzzles y preguntas generados.</div>
+    <div class="frow">
+      <label class="flbl">Módulo / Asignatura</label>
+      <input type="text" id="inp-mod" placeholder="Ej: Gestión de Almacenes · 2º GM Actividades Comerciales">
+    </div>
+    <div class="frow">
+      <label class="flbl">Contenido del tema</label>
+      <div class="fsub">Pega aquí todo el texto que quieras — apuntes, libro, PDF... sin límite. Puedes hacer scroll dentro del cuadro.</div>
+      <textarea id="inp-con" placeholder="Pega aquí el texto del tema. Sin límite de páginas..." oninput="updateCount()"></textarea>
+      <div class="char-count" id="char-count">0 caracteres</div>
+    </div>
+    <div class="frow">
+      <label class="flbl">Número de salas</label>
+      <div class="sala-picker">
+        <div class="so" id="so3" onclick="setSalas(3)">3 salas · ~15 min</div>
+        <div class="so sel" id="so4" onclick="setSalas(4)">4 salas · ~20 min</div>
+        <div class="so" id="so5" onclick="setSalas(5)">5 salas · ~30 min</div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+      <button class="btn btn-ghost" onclick="goSt('landing')">← Volver</button>
+      <button class="btn btn-lime" onclick="genPrompt()">Generar prompt →</button>
+    </div>
+  </div>
+</div>
+<div class="footer"><div class="fc">
+  <div class="fb">FP:</div><div><div class="fn">Alberto Sánchez Cabanillas</div><div class="fro">Docente · Comercio y Marketing</div></div>
+  <div class="fs">|</div><a class="fl" href="https://www.linkedin.com/in/albertosanchezcabanillas/" target="_blank">LinkedIn ↗</a>
+  <div class="fs">|</div><div class="flic">CC BY-NC 4.0</div>
+</div></div>
+</div>
+
+<!-- PROMPT -->
+<div class="scr" id="s-prompt">
+<div class="main">
+  <div class="card coral">
+    <div class="card-lbl">Paso 2 · Copia y pega en Claude</div>
+    <div class="card-h">Tu prompt está listo</div>
+    <div class="card-sub">Cópialo, abre Claude en una nueva conversación, pégalo y envíalo.</div>
+    <div class="copy-row">
+      <button class="btn btn-lime" onclick="cpPrompt()">Copiar prompt</button>
+      <button class="btn btn-ink" onclick="window.open('https://claude.ai/new','_blank')">Abrir Claude.ai ↗</button>
+      <span class="copied" id="cp-ok">¡Copiado!</span>
+    </div>
+    <div class="prompt-area" id="prompt-box"></div>
+    <div class="hl hl-blue">
+      <strong>Qué hacer en Claude:</strong><br>
+      1. Pega el prompt y envíalo<br>
+      2. Claude te mostrará el plan de salas — revisa que preguntas y respuestas sean correctas<br>
+      3. Si algo no está bien: <em>"Cambia la pregunta de la sala 2 por..."</em><br>
+      4. Cuando esté todo OK dile: <strong>"Genera el HTML del escape room y el cuestionario AIKEN"</strong><br>
+      5. Descarga o copia los dos archivos que te dé
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;">
+      <button class="btn btn-ghost" onclick="goSt('creator')">← Volver</button>
+      <button class="btn btn-ink" onclick="goSt('moodle')">Ya tengo los archivos · ¿Cómo los subo? →</button>
+    </div>
+  </div>
+</div>
+<div class="footer"><div class="fc">
+  <div class="fb">FP:</div><div><div class="fn">Alberto Sánchez Cabanillas</div><div class="fro">Docente · Comercio y Marketing</div></div>
+  <div class="fs">|</div><a class="fl" href="https://www.linkedin.com/in/albertosanchezcabanillas/" target="_blank">LinkedIn ↗</a>
+  <div class="fs">|</div><div class="flic">CC BY-NC 4.0</div>
+</div></div>
+</div>
+
+<!-- GUÍA MOODLE -->
+<div class="scr" id="s-moodle">
+<div class="main">
+  <div class="card blue">
+    <div class="card-lbl">Guía de instalación · Moodle</div>
+    <div class="card-h">¿Cómo subo los archivos?</div>
+    <div class="card-sub">Claude te habrá dado dos archivos: el HTML del escape room y el TXT del cuestionario AIKEN.</div>
+    <div class="tabs">
+      <div class="tab on" onclick="swTab('html')">🎮 Escape room</div>
+      <div class="tab" onclick="swTab('aiken')">📝 Cuestionario AIKEN</div>
+      <div class="tab" onclick="swTab('flujo')">🏁 Flujo en clase</div>
+    </div>
+    <div class="tc on" id="tc-html">
+      <div class="hl hl-lime" style="margin-bottom:16px;">Tienes el archivo <code style="background:rgba(0,0,0,0.08);padding:2px 6px;border-radius:3px;font-family:Share Tech Mono,monospace;font-size:11px;">escape_room.html</code> descargado de Claude.</div>
+      <div class="g-sec">
+        <div class="g-step"><div class="g-num">1</div><div class="g-text">Ve a tu curso en Moodle → pulsa <strong>Activar edición</strong></div></div>
+        <div class="g-step"><div class="g-num">2</div><div class="g-text">Pulsa <strong>Añadir una actividad o recurso</strong> → selecciona <strong>Archivo</strong></div></div>
+        <div class="g-step"><div class="g-num">3</div><div class="g-text">Ponle un nombre (ej: <em>"🚨 Escape Room · Operación Almacén X"</em>)</div></div>
+        <div class="g-step"><div class="g-num">4</div><div class="g-text">Arrastra el archivo <code>escape_room.html</code> al área de subida</div></div>
+        <div class="g-step"><div class="g-num">5</div><div class="g-text">Despliega la sección <strong>Apariencia</strong> → en el campo "Mostrar" selecciona <strong>Abrir</strong></div></div>
+        <div class="g-step"><div class="g-num">6</div><div class="g-text">Pulsa <strong>Guardar y mostrar</strong> → comprueba que el escape room se abre en el navegador</div></div>
+      </div>
+    </div>
+    <div class="tc" id="tc-aiken">
+      <div class="hl hl-lime" style="margin-bottom:16px;">Tienes el archivo <code style="background:rgba(0,0,0,0.08);padding:2px 6px;border-radius:3px;font-family:Share Tech Mono,monospace;font-size:11px;">cuestionario.txt</code> descargado de Claude.</div>
+      <div class="g-sec">
+        <div class="g-title">Paso 1 — Crea el cuestionario vacío</div>
+        <div class="g-step"><div class="g-num">1</div><div class="g-text">En tu curso → <strong>Añadir actividad o recurso</strong> → <strong>Cuestionario</strong></div></div>
+        <div class="g-step"><div class="g-num">2</div><div class="g-text">Ponle nombre, configura tiempo y opciones → <strong>Guardar y mostrar</strong></div></div>
+      </div>
+      <div class="g-div"></div>
+      <div class="g-sec">
+        <div class="g-title">Paso 2 — Importa las preguntas AIKEN</div>
+        <div class="g-step"><div class="g-num">3</div><div class="g-text">Dentro del cuestionario → pestaña <strong>Banco de preguntas</strong> → botón <strong>Preguntas</strong> → selecciona <strong>Importar</strong></div></div>
+        <div class="g-step"><div class="g-num">4</div><div class="g-text">En "Formato de archivo" selecciona <strong>Formato AIKEN</strong></div></div>
+        <div class="g-step"><div class="g-num">5</div><div class="g-text">Despliega <strong>General</strong> → en "Categoría" selecciona <code>Por defecto en "[nombre de tu cuestionario]"</code><span class="note">⚠️ Elige el nombre de tu cuestionario, no el del módulo ni el del aula virtual</span></div></div>
+        <div class="g-step"><div class="g-num">6</div><div class="g-text">Arrastra el archivo <code>cuestionario.txt</code> al área de subida → pulsa <strong>Importar</strong></div></div>
+      </div>
+      <div class="g-div"></div>
+      <div class="g-sec">
+        <div class="g-title">Paso 3 — Añade las preguntas al cuestionario</div>
+        <div class="g-step"><div class="g-num">7</div><div class="g-text">Ve a la pestaña <strong>Preguntas</strong> del cuestionario → esquina inferior derecha → <strong>Agregar</strong> → <strong>Del banco de preguntas</strong></div></div>
+        <div class="g-step"><div class="g-num">8</div><div class="g-text">En "Escriba o seleccione…" elige <code>Por defecto en "[nombre de tu cuestionario]"</code> → pulsa <strong>Aplicar filtros</strong></div></div>
+        <div class="g-step"><div class="g-num">9</div><div class="g-text">Marca la casilla para <strong>seleccionar todas las preguntas</strong> → pulsa <strong>Añadir preguntas seleccionadas al cuestionario</strong></div></div>
+        <div class="g-step"><div class="g-num">10</div><div class="g-text">Guarda. Las notas irán automáticamente al calificador del curso ✅</div></div>
+      </div>
+    </div>
+    <div class="tc" id="tc-flujo">
+      <div class="hl hl-lime" style="margin-bottom:12px;">
+        <strong>Cómo funciona en clase:</strong><br><br>
+        🏭 Los alumnos forman equipos (3-4 personas) y juegan el escape room juntos en una pantalla.<br><br>
+        📝 Anotan los códigos que obtienen en cada sala.<br><br>
+        👤 Después, <strong>cada alumno individualmente</strong> va al cuestionario de Moodle, introduce los códigos y responde las preguntas de conceptos.<br><br>
+        📊 La nota va directa al calificador. Sin corrección manual.
+      </div>
+      <div class="hl hl-coral">
+        ⚠️ <strong>Los códigos solos no bastan para aprobar.</strong> El cuestionario también pregunta por los conceptos trabajados en cada sala. Si no han entendido el contenido, los códigos no sirven de nada.
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;flex-wrap:wrap;gap:10px;">
+      <button class="btn btn-ghost" onclick="goSt('landing')">← Inicio</button>
+      <button class="btn btn-lime" onclick="goSt('creator')">🎮 Crear otro escape room →</button>
+    </div>
+  </div>
+</div>
+<div class="footer"><div class="fc">
+  <div class="fb">FP:</div><div><div class="fn">Alberto Sánchez Cabanillas</div><div class="fro">Docente · Comercio y Marketing</div></div>
+  <div class="fs">|</div><a class="fl" href="https://www.linkedin.com/in/albertosanchezcabanillas/" target="_blank">LinkedIn ↗</a>
+  <div class="fs">|</div><div class="flic">CC BY-NC 4.0</div>
+</div></div>
+</div>
+
+<script>
+var NS=4;
+
+function goSt(id){
+  document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('on');});
+  document.getElementById('s-'+id).classList.add('on');
+  document.documentElement.scrollTop=0;
+  document.body.scrollTop=0;
+}
+
+function setSalas(n){
+  NS=n;
+  [3,4,5].forEach(function(x){
+    document.getElementById('so'+x).className='so'+(x===n?' sel':'');
+  });
+}
+
+function updateCount(){
+  var ta=document.getElementById('inp-con');
+  var cc=document.getElementById('char-count');
+  var len=ta.value.length;
+  cc.textContent=len.toLocaleString()+' caracteres';
+  cc.className='char-count'+(len>500?' ok':'');
+}
+
+function swTab(name){
+  var names=['html','aiken','flujo'];
+  document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('on',names[i]===name);});
+  names.forEach(function(n){document.getElementById('tc-'+n).classList.toggle('on',n===name);});
+}
+
+function genPrompt(){
+  var mod=document.getElementById('inp-mod').value.trim();
+  var con=document.getElementById('inp-con').value.trim();
+  if(con.length<60){alert('Por favor introduce más contenido del tema.');return;}
+  var prompt=`Eres un experto en gamificación educativa y escape rooms para Formación Profesional en España.
+
+DATOS DEL TEMA:
+- Módulo/Asignatura: ${mod||'Formación Profesional'}
+- Número de salas: ${NS}
+- Contenido del tema:
+---
+${con}
+---
+
+════════════════════════════════════════
+PASO 1 — DISEÑA EL PLAN DE SALAS
+════════════════════════════════════════
+
+Muéstrame sala a sala de forma clara y estructurada. Para cada sala define:
+
+• Nombre con emoji temático (relacionado con el contenido)
+• Texto narrativo de ambientación (1-2 frases, estilo thriller/acción)
+• Concepto concreto del tema que trabaja
+• Puzzle 1 — Drag & drop:
+  - Descripción breve de qué hay que clasificar
+  - 4-6 características/items para distribuir en exactamente 2 categorías
+  - Indica qué item va a qué categoría
+• Puzzle 2 — Elección múltiple:
+  - Pregunta de dificultad media-fácil (respondible mirando los apuntes)
+  - Opciones A, B, C, D — una correcta
+  - Código falso de 2 caracteres para cada opción incorrecta
+• Código real: una letra mayúscula + un dígito (ej: B2, F4, K7)
+• Código cifrado: aplica César +3 SOLO a la letra.
+  Tabla: A→D, B→E, C→F, D→G, E→H, F→I, G→J, H→K, I→L, J→M, K→N, L→O, M→P, N→Q, O→R, P→S, Q→T, R→U, S→V, T→W, U→X, V→Y, W→Z, X→A, Y→B, Z→C
+  El número NO cambia.
+
+Además genera 8 preguntas muy fáciles para la sala de castigo (respondibles sin apuntes).
+
+⚠️ Verifica que el código cifrado es correcto: letra del código real +3 posiciones, número igual.
+
+Cuando yo te confirme el plan o te pida cambios, pasamos al Paso 2.
+
+════════════════════════════════════════
+PASO 2 — GENERA LOS ARCHIVOS
+(solo cuando yo te confirme el plan)
+════════════════════════════════════════
+
+Cuando el plan esté aprobado, genera dos archivos:
+
+──────────────────────────────────────
+A) HTML COMPLETO del escape room
+──────────────────────────────────────
+
+ESTILOS OBLIGATORIOS:
+- Google Fonts: Fira Sans + Share Tech Mono
+- Fondo body: #87CEEB con pattern de puntitos blancos semitransparentes
+- HUD fijo 48px: fondo blanco, borde inferior 3px #CCFF00
+- HUD izquierda: badge "FP:" fondo #CCFF00 texto negro + título en Share Tech Mono
+- HUD centro: 2 vidas ❤️❤️
+- HUD derecha: chips de códigos por sala + timer (#CCFF00 normal, #F0A030 <10min, #E85555 <3min parpadeante)
+- Botón principal: fondo #CCFF00, texto negro
+- Botón secundario: fondo #111, texto #CCFF00
+- Paneles: fondo blanco, border-radius 8px, franja color 4px arriba
+- Código revelado: tarjeta fondo #CCFF00, texto negro bold
+- Sala de castigo: fondo #F06B6B, bugs flotantes animados, countdown 5s
+- Footer en TODAS las pantallas: "FP: Alberto Sánchez Cabanillas | Docente Comercio y Marketing | CC BY-NC 4.0 | linkedin.com/in/albertosanchezcabanillas"
+
+MECÁNICAS:
+- 2 vidas, timer 30 min
+- Fallo = -5 min + sala de castigo
+- Sala castigo: countdown 5s → 3 preguntas aleatorias del banco → si falla reinicia las 3 → si supera, 1 vida restaurada
+- Cada sala: panel izquierdo con BASE DE DATOS MANIPULADA (datos incorrectos del tema + aviso rojo) + panel derecho con puzzles
+- Puzzle drag → puzzle choice → código cifrado con tabla César + input verificación
+- Sala final: inputs para todos los códigos en orden + verificación global
+- Pantalla final: códigos en tarjetas #CCFF00, tiempo empleado, botones "Volver al inicio" y "Jugar de nuevo"
+- SCORM 1.2: LMSInitialize al cargar, completed + LMSFinish al terminar
+
+──────────────────────────────────────
+B) CUESTIONARIO en formato AIKEN
+──────────────────────────────────────
+
+Genera un archivo .txt con:
+- Una pregunta por sala preguntando cuál era el código
+- Una pregunta de concepto por sala basada en el puzzle 2
+- Una pregunta final con la secuencia completa de códigos en orden
+
+Formato AIKEN estricto:
+Texto de la pregunta
+A) opción
+B) opción
+C) opción
+D) opción
+ANSWER: X
+
+(línea en blanco entre preguntas)`;
+  document.getElementById('prompt-box').textContent=prompt;
+  goSt('prompt');
+}
+
+function cpPrompt(){
+  var txt=document.getElementById('prompt-box').textContent;
+  navigator.clipboard.writeText(txt).then(function(){
+    var b=document.getElementById('cp-ok');
+    b.style.display='inline-block';
+    setTimeout(function(){b.style.display='none';},2500);
+  });
+}
+</script>
+</body>
+</html>
